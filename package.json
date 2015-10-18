@@ -1,0 +1,25 @@
+{
+  "name": "dottkIPUpdater",
+  "version": "0.0.1",
+  "description": "An IP updater for the dot.tk DNS",
+  "author": "Rafaël Naciri",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raf924/dottkIPUpdater"
+  },
+  "keywords": [
+    "ip",
+    "updater",
+    "dns",
+    "dot.tk"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "events": "^1.1.0",
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "jade": "^1.11.0",
+    "request": "^2.65.0"
+  }
+}

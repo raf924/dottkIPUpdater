@@ -1,0 +1,22 @@
+html
+  head
+    link(href="css/bootstrap.min.css")
+    script(src="js/jquery.min.js")
+    script(src="js/bootstrap.min.js")
+
+  body
+    p Subdomains for #{domain}
+    table.table.table-bordered.table-hover
+      thead
+        th Name
+        th Type
+        th TTL
+        th Target         
+      tbody
+        - each subdomain in subdomains
+          tr
+            td #{subdomain.name}.#{domain}
+            td #{subdomain.type}
+            td #{subdomain.ttl}
+            td #{subdomain.value}
+        
