@@ -13,7 +13,6 @@ var app = express();
 app.set("view engine", "jade");
 app.use(express.static("static"));
 app.get("/", function (req, res) {
-  console.log(domains);
   res.render("domains", {domains:domains});
 });
 
@@ -22,7 +21,6 @@ app.get("/refresh", function (req, res) {
 });
 
 app.get("/domain/:id", function (req, res) {
-  console.log(domains[req.params.id]);
   res.render("subdomains", {domain:domains[req.params.id].link, subdomains: domains[req.params.id].subdomains});
 });
 
@@ -46,9 +44,7 @@ function checkDomains() {
           subdomain.type = $("td:nth-of-type(2) strong", $subdomain).text();
           subdomain.ttl = $("td:nth-of-type(3) input[type='text']", $subdomain).val();
           subdomain.value = $("td:nth-of-type(4) input[type='text']", $subdomain).val();
-          console.log(subdomain);
           if(subdomain.value == oldAddress){
-            console.log("Value to update");
             modifyFlag = true;
             subdomain.value = localData.IPAddress;
           }
@@ -76,6 +72,7 @@ function checkIP() {
     if(JSON.parse(data).data.IPAddress!=localData.IPAddress){
       oldAddress = localData.IPAddress;
       localData.IPAddress = JSON.parse(data).data.IPAddress;
+      saveConfig();
       request.post({uri:"https://my.freenom.com/dologin.php", jar:true, form:{"username":localData.mail, password:localData.password}}, function (err, res, data) {
         if(err==null){
           checkDomains();
@@ -85,7 +82,11 @@ function checkIP() {
   });
 }
 
-var server = app.listen(8080,function () {
+function saveConfig() {
+  fs.writeFileSync("./data.json", localData);
+}
+
+var server = app.listen(localData.port,function () {
   checkIP();
 });
 
