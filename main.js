@@ -58,6 +58,7 @@ function checkDomains() {
           }
           request.post({uri:"https://my.freenom.com/clientarea.php", qs:{managedns:domain.link,domainid:domain.id}, jar:true, form:formData}, function (err, res, data) {
             if(err==null){
+              console.log("Records updated");
               checkDomains();
             }
           });
@@ -83,7 +84,7 @@ function checkIP() {
 }
 
 function saveConfig() {
-  fs.writeFileSync("./data.json", localData);
+  fs.writeFileSync("./data.json", JSON.stringify(localData));
 }
 
 var server = app.listen(localData.port,function () {
