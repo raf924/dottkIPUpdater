@@ -2,7 +2,7 @@ var request = require('request');
 var fs = require('fs');
 var cheerio = require('cheerio');
 var express = require('express');
-var events = require('events');
+var EventEmitter = require('events');
 
 var localData = require("./data.json");
 var domains = localData.domains;
@@ -57,9 +57,8 @@ function checkDomains() {
             formData.records.push(subdomain);
           }
           request.post({uri:"https://my.freenom.com/clientarea.php", qs:{managedns:domain.link,domainid:domain.id}, jar:true, form:formData}, function (err, res, data) {
-            if(err==null){
-              console.log("Records updated");
-              checkDomains();
+            if(err==null&&$domains.nextSibling.next==null){
+              //checkDomains();
             }
           });
         }
