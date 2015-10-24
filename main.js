@@ -58,7 +58,7 @@ function checkDomains() {
           }
           request.post({uri:"https://my.freenom.com/clientarea.php", qs:{managedns:domain.link,domainid:domain.id}, jar:true, form:formData}, function (err, res, data) {
             if(err==null&&$domains.nextSibling.next==null){
-              //checkDomains();
+              console.log("Done");
             }
           });
         }
@@ -73,12 +73,12 @@ function checkIP() {
       oldAddress = localData.IPAddress;
       localData.IPAddress = JSON.parse(data).data.IPAddress;
       saveConfig();
-      request.post({uri:"https://my.freenom.com/dologin.php", jar:true, form:{"username":localData.mail, password:localData.password}}, function (err, res, data) {
-        if(err==null){
-          checkDomains();
-        }
-      });
     }
+    request.post({uri:"https://my.freenom.com/dologin.php", jar:true, form:{"username":localData.mail, password:localData.password}}, function (err, res, data) {
+      if(err==null){
+        checkDomains();
+      }
+    });
   });
 }
 
