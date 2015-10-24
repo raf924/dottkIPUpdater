@@ -36,14 +36,14 @@ function checkDomains() {
       domain.subdomains = [];
       domains[domain.id] = domain;
       request({uri: "https://my.freenom.com/clientarea.php",qs:{managedns:domain.link,domainid:domain.id}, jar:true}, function (err, res, data) {
-        $ = cheerio.load(data);
-        token = $("[name='token']").val();
-        $("form").first().find("table tbody tr").each(function (idx, $subdomain) {
+        $sub = cheerio.load(data);
+        token = $sub("[name='token']").val();
+        $sub("form").first().find("table tbody tr").each(function (idx, $subdomain) {
           var subdomain = {};
-          subdomain.name = $("td:nth-of-type(1) input[type='text']", $subdomain).val();
-          subdomain.type = $("td:nth-of-type(2) strong", $subdomain).text();
-          subdomain.ttl = $("td:nth-of-type(3) input[type='text']", $subdomain).val();
-          subdomain.value = $("td:nth-of-type(4) input[type='text']", $subdomain).val();
+          subdomain.name = $sub("td:nth-of-type(1) input[type='text']", $subdomain).val();
+          subdomain.type = $sub("td:nth-of-type(2) strong", $subdomain).text();
+          subdomain.ttl = $sub("td:nth-of-type(3) input[type='text']", $subdomain).val();
+          subdomain.value = $sub("td:nth-of-type(4) input[type='text']", $subdomain).val();
           if(subdomain.value == oldAddress){
             modifyFlag = true;
             subdomain.value = localData.IPAddress;
